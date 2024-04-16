@@ -168,7 +168,7 @@ async function getUserPlayFabId(xuid) {
 	if (authData.errorMsg) return authData;
 
 	const body = JSON.stringify({
-		XboxLiveAccountIds: [xuid],
+		XboxLiveAccountIds: [xuid][0],
         SANDBOX: "RETAIL"
 	}, null);
 
