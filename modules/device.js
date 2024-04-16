@@ -19,7 +19,7 @@ async function deviceVaildate(packet, dbAccount, client, realm, packetType) {
 	if (!packet || !client || !realm) return;
 
 	if (packetType === "playerList") {
-		if (config.deviceChecks.deviceCheck1.enabled && packet.build_platform != 12 || packet.build_platform != 11 && packet.platform_chat_id.length != 0) {
+		if (config.deviceChecks.deviceCheck1.enabled && packet.build_platform != 12 && packet.build_platform != 11 && packet.platform_chat_id.length != 0) {
 			console.log(`[${packet.xbox_user_id}] Not on right platform and has a Platform Chat ID. [T1]`);
 			if (!config.debug) {
 				switch (config.deviceChecks.deviceCheck1.punishment) {
@@ -851,7 +851,7 @@ async function deviceVaildate(packet, dbAccount, client, realm, packetType) {
 		}
 
 		if (config.deviceChecks.deviceCheck1.enabled && device_os != 'NintendoSwitch' || device_os != 'Orbis' && packet.platform_chat_id.length != 0) {
-			console.log(`[${dbAccount.xuid}] Not on NintendoSwitch & has Platform Chat ID. [T1]`);
+			console.log(`[${dbAccount.xuid}] Not on right platform and has a Platform Chat ID. [T1]`);
 			if (!config.debug) {
 				switch (config.deviceChecks.deviceCheck1.punishment) {
 					case "kick":
