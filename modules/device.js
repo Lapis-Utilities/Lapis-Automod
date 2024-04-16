@@ -19,8 +19,8 @@ async function deviceVaildate(packet, dbAccount, client, realm, packetType) {
 	if (!packet || !client || !realm) return;
 
 	if (packetType === "playerList") {
-		if (config.deviceChecks.deviceCheck1.enabled && packet.build_platform != 12 && packet.platform_chat_id.length != 0) {
-			console.log(`[${packet.xbox_user_id}] Not on NintendoSwitch & has Platform Chat ID. [T1]`);
+		if (config.deviceChecks.deviceCheck1.enabled && packet.build_platform != 12 || packet.build_platform != 11 && packet.platform_chat_id.length != 0) {
+			console.log(`[${packet.xbox_user_id}] Not on right platform and has a Platform Chat ID. [T1]`);
 			if (!config.debug) {
 				switch (config.deviceChecks.deviceCheck1.punishment) {
 					case "kick":
@@ -57,7 +57,7 @@ async function deviceVaildate(packet, dbAccount, client, realm, packetType) {
 			}
 		}
 
-		if (config.deviceChecks.deviceCheck2.enabled && !isValidPlatformChatId(packet.platform_chat_id) && packet.build_platform === 12) {
+		if (config.deviceChecks.deviceCheck2.enabled && !isValidPlatformChatId(packet.platform_chat_id) && packet.build_platform === 12 || packet.build_platform === 11) {
 			console.log(`[${packet.xbox_user_id}] Invaild Platform Chat ID. [T2]`);
 			if (!config.debug) {
 				switch (config.deviceChecks.deviceCheck2.punishment) {
@@ -646,6 +646,44 @@ async function deviceVaildate(packet, dbAccount, client, realm, packetType) {
 			case "Orbis":
 			case "Win10":
 			case "Win32":
+				if (config.deviceChecks.deviceCheck2.enabled && !isValidPlatformChatId(packet.platform_chat_id) && device_os === "Orbis") {
+					console.log(`[${dbAccount.xuid}] Invaild Platform Chat ID. [T2]`);
+					if (!config.debug) {
+						switch (config.deviceChecks.deviceCheck2.punishment) {
+							case "kick":
+								client.sendCommand(`kick "${dbAccount.xuid}" Invaild Platform Chat ID. (0xc5)`, 0);
+								dbAccount.kickCount++
+								dbAccount.save()
+								break;
+							case "ban":
+								client.sendCommand(`kick "${dbAccount.xuid}" Invaild Platform Chat ID. (0xc5)`, 0);
+								dbAccount.banCount++
+								dbAccount.isBanned = true
+								dbAccount.save()
+								break;
+							case "clubKick":
+								if (realm.isOwner) {
+									realm.kick(dbAccount.xuid);
+									dbAccount.clubKickCount++
+									dbAccount.save()
+								}
+								break;
+							case "clubBan":
+								if (realm.isOwner) {
+									realm.ban(dbAccount.xuid);
+									dbAccount.clubBanCount++
+									dbAccount.save()
+								}
+								break;
+							case "warning":
+								client.sendCommand(`say "${dbAccount.xuid}" Invaild Platform Chat ID. (0xc5)`, 0);
+								dbAccount.warningCount++
+								dbAccount.save()
+								break;
+						}
+					}
+				}
+
 				if (config.deviceChecks.deviceCheck6.enabled && !isUUIDv3(device_id)) {
 					console.log(`[${dbAccount.xuid}] User on ${device_os} with the wrong Device ID. [T6]`);
 					if (!config.debug) {
@@ -812,7 +850,7 @@ async function deviceVaildate(packet, dbAccount, client, realm, packetType) {
 			}
 		}
 
-		if (config.deviceChecks.deviceCheck1.enabled && device_os != 'NintendoSwitch' && packet.platform_chat_id.length != 0) {
+		if (config.deviceChecks.deviceCheck1.enabled && device_os != 'NintendoSwitch' || device_os != 'Orbis' && packet.platform_chat_id.length != 0) {
 			console.log(`[${dbAccount.xuid}] Not on NintendoSwitch & has Platform Chat ID. [T1]`);
 			if (!config.debug) {
 				switch (config.deviceChecks.deviceCheck1.punishment) {

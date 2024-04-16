@@ -4,7 +4,7 @@ const { isValidPlatformChatId } = require("../src/util.js");
 
 async function textVaildate(packet, dbAccount, client, realm) {
 	if (!packet || !dbAccount || !client || !realm) return;
-	
+
     if (packet.type === 'translation') return;
 	if (config.debug) console.log(`Text Vaildate`);
 
@@ -46,7 +46,7 @@ async function textVaildate(packet, dbAccount, client, realm) {
 		}
 	}
 
-    if (config.textChecks.textCheck2.enabled && packet.platform_chat_id.length >= 1 && !isValidPlatformChatId(packet.platform_chat_id)) {
+    if (config.textChecks.textCheck2.enabled && packet.platform_chat_id.length >= 1 && !isValidPlatformChatId(packet.platform_chat_id) && dbAccount.currentDevice != 'NintendoSwitch' || dbAccount.currentDevice != 'Orbis') {
         console.log(`[${packet.xuid}] Bad Message [T2]`);
 		if (!config.debug) {
 			switch (config.textChecks.textCheck2.punishment) {
@@ -84,7 +84,7 @@ async function textVaildate(packet, dbAccount, client, realm) {
 		}
     }
 
-    if (config.textChecks.textCheck3.enabled && packet.platform_chat_id.length >= 1 && dbAccount.currentDevice != 'NintendoSwitch') {
+    if (config.textChecks.textCheck3.enabled && packet.platform_chat_id.length >= 1 && dbAccount.currentDevice != 'NintendoSwitch' || dbAccount.currentDevice != 'Orbis') {
         console.log(`[${packet.xuid}] Bad Message [T3]`);
 		if (!config.debug) {
 			switch (config.textChecks.textCheck3.punishment) {

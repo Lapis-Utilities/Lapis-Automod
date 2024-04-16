@@ -46,10 +46,6 @@ function emoteVaildate(packet, dbAccount, client, realm) {
             }
         }
     }
-
-    if (config.emoteChecks.emoteCheck2.enabled) {
-
-    }
 }
 
 module.exports = {
