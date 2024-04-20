@@ -98,6 +98,7 @@
             "enabled": true,
             "punishment": "kick",
             "bannedDevices": [
+                "Win10",
                 "Android",
                 "FireOS"
             ]

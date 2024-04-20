@@ -1,7 +1,7 @@
 {
   "name": "lapis-automod",
   "description": "Lapis Automod helps protect your Minecraft realm by moderating actions.",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "main": "index.js",
   "dependencies": {
     "axios": "^1.6.8",
