@@ -85,27 +85,37 @@ function skinVaildate(packet, dbAccount, client, realm, packetType) {
 		if (config.skinChecks.skinCheck3.enabled && !packet.skin_data.skin_resource_pack.includes('geometry.humanoid.customSlim') && !packet.skin_data.skin_resource_pack.includes('geometry.humanoid.custom') && (packet.skin_data.play_fab_id > 16 || packet.skin_data.play_fab_id < 16)) {
 			console.log(`[${packet.xbox_user_id}] Bad skin information [T3]`);
 			if (!config.debug) {
-				if (config.skinChecks.skinCheck3.punishment === "kick") {
-					client.sendCommand(`kick "${packet.xbox_user_id}" Invaild skin information sent. (0x3f8)`, 0)
-					dbAccount.kickCount++
-					dbAccount.save()
-				} else if (config.skinChecks.skinCheck3.punishment === "ban") {
-					client.sendCommand(`kick "${packet.xbox_user_id}" Invaild skin information sent. (0x3f8)`, 0)
-					dbAccount.banCount++
-					dbAccount.isBanned = true
-					dbAccount.save()
-				} else if (config.skinChecks.skinCheck3.punishment === "clubKick" && realm.isOwner) {
-					realm.kick(packet.xbox_user_id);
-					dbAccount.clubKickCount++
-					dbAccount.save()
-				} else if (config.skinChecks.skinCheck3.punishment === "clubBan" && realm.isOwner) {
-					realm.ban(packet.xbox_user_id);
-					dbAccount.clubBanCount++
-					dbAccount.save()
-				} else if (config.skinChecks.skinCheck3.punishment === "warning") {
-					client.sendCommand(`say "${packet.xbox_user_id}" You sent invaild skin information. (0x3f8)`, 0)
-					dbAccount.warningCount++
-					dbAccount.save()
+				switch (config.skinChecks.skinCheck3.punishment) {
+					case "kick":
+						client.sendCommand(`kick "${packet.xbox_user_id}" Invaild skin information sent. (0x3f6)`, 0)
+						dbAccount.kickCount++
+						dbAccount.save()
+						break
+					case "ban":
+						client.sendCommand(`kick "${packet.xbox_user_id}" Invaild skin information sent. (0x3f6)`, 0)
+						dbAccount.banCount++
+						dbAccount.isBanned = true
+						dbAccount.save()
+						break
+					case "clubKick":
+						if (realm.isOwner) {
+							realm.kick(packet.xbox_user_id);
+							dbAccount.clubKickCount++
+							dbAccount.save()
+						}
+						break
+					case "clubBan":
+						if (realm.isOwner) {
+							realm.ban(packet.xbox_user_id);
+							dbAccount.clubBanCount++
+							dbAccount.save()
+						}
+						break
+					case "warning":
+						client.sendCommand(`say "${packet.xbox_user_id}" You sent invaild skin information. (0x3f6)`, 0)
+						dbAccount.warningCount++
+						dbAccount.save()
+						break
 				}
 			}
 		}

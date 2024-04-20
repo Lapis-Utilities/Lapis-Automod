@@ -103,7 +103,7 @@ const realm_api_headers = {
 					realm.ip = realmIP.address.substring(0, realmIP.address.indexOf(':'));
 					realm.port = Number(realmIP.address.substring(realmIP.address.indexOf(':') + 1));
 				}
-		
+
 				if (response.status === 503) {
 					console.log(chalk.red("---> Retrying..."));
 					realmIP = await response.text();
