@@ -98,7 +98,6 @@
             "enabled": true,
             "punishment": "kick",
             "bannedDevices": [
-                "Win10",
                 "Android",
                 "FireOS"
             ]
@@ -153,14 +152,6 @@
         "textCheck1": {
             "enabled": true,
             "punishment": "kick"
-        },
-        "textCheck2": {
-            "enabled": true,
-            "punishment": "kick"
-        },
-        "textCheck3": {
-            "enabled": true,
-            "punishment": "warning"
         }
     },
     "entityEventChecks": {
