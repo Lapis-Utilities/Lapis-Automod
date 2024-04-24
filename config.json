@@ -2,7 +2,7 @@
     "debug": false,
     "clientOptions": {
         "deviceOS": 13,
-        "protocolVersion": 662,
+        "protocolVersion": 671,
         "getLatestProtocolVersion": true,
         "automaticRealmRejoining": true,
         "rejoinTimeout": 6000,
