@@ -1,11 +1,11 @@
 {
   "name": "lapis-automod",
   "description": "Lapis Automod helps protect your Minecraft realm by moderating actions.",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "main": "index.js",
   "dependencies": {
     "axios": "^1.6.8",
-    "bedrock-protocol": "^3.35.0",
+    "bedrock-protocol": "^3.36.0",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.3.1",
